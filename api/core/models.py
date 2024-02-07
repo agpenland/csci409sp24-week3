@@ -11,3 +11,30 @@ class Airport(models.Model):
 
     def __str__(self):
         return self.name
+
+class Airline(models.Model):
+    name = models.CharField(max_length=255)
+    airline_code = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.name
+
+class Runway(models.Model):
+    LEFT = "L"
+    CENTER = "C"
+    RIGHT = "R"
+    NONE = "N"
+    RUNWAY_DESG_CHOICES = {
+        LEFT: "Left",
+        CENTER: "Center",
+        RIGHT: "Right",
+        NONE: "None",
+    }
+    runway_number = models.IntegerField()
+    runway_designation = models.CharField(max_length=1, choices=RUNWAY_DESG_CHOICES)
+    length = models.IntegerField()
+    width = models.IntegerField()
+    airport = models.ForeignKey(Airport, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.runway_number) + self.runway_designation
