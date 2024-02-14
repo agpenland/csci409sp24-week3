@@ -34,7 +34,7 @@ class Runway(models.Model):
     runway_designation = models.CharField(max_length=1, choices=RUNWAY_DESG_CHOICES)
     length = models.IntegerField()
     width = models.IntegerField()
-    airport = models.ForeignKey(Airport, on_delete=models.CASCADE)
+    airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="runways")
 
     def __str__(self):
         return str(self.runway_number) + self.runway_designation
@@ -42,7 +42,7 @@ class Runway(models.Model):
 class Flight(models.Model):
     origin = models.ForeignKey(Airport, on_delete=models.PROTECT, related_name="flight_origin")
     destination = models.ForeignKey(Airport, on_delete=models.PROTECT, related_name="flight_destination")
-    airline = models.ForeignKey(Airline, on_delete=models.PROTECT)
+    airline = models.ForeignKey(Airline, on_delete=models.PROTECT, related_name="airline")
     flight_number = models.IntegerField()
     departure = models.DateTimeField(auto_now=False, auto_now_add=False)
     arrival = models.DateTimeField(auto_now=False, auto_now_add=False)
